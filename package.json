@@ -1,46 +1,48 @@
 {
-  "private": true,
-  "scripts": {
-    "build": "next build",
-    "dev": "next dev --turbopack",
-    "start": "next start"
-  },
-  "dependencies": {
-    "@heroicons/react": "^2.2.0",
-    "@prisma/adapter-pg": "^7.5.0",
-    "@prisma/client": "^7.5.0",
-    "@prisma/extension-accelerate": "^3.0.1",
-    "@tailwindcss/forms": "^0.5.10",
-    "autoprefixer": "10.4.20",
-    "bcrypt": "^5.1.1",
-    "clsx": "^2.1.1",
-    "dotenv": "^17.3.1",
-    "lucide-react": "^0.577.0",
-    "next": "latest",
-    "next-auth": "5.0.0-beta.25",
-    "pg": "^8.20.0",
-    "postcss": "8.5.1",
-    "postgres": "^3.4.6",
-    "react": "latest",
-    "react-dom": "latest",
-    "react-hook-form": "^7.71.2",
-    "tailwindcss": "3.4.17",
-    "typescript": "5.7.3",
-    "use-debounce": "^10.0.4",
-    "zod": "^3.25.17"
-  },
-  "devDependencies": {
-    "@types/bcrypt": "^5.0.2",
-    "@types/node": "22.10.7",
-    "@types/pg": "8.11.11",
-    "@types/react": "19.0.7",
-    "@types/react-dom": "19.0.3",
-    "prisma": "^7.5.0"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "bcrypt",
-      "sharp"
-    ]
-  }
+    "private":  true,
+    "scripts":  {
+                    "dev":  "next dev --turbopack",
+                    "build":  "next build",
+                    "start":  "next start",
+                    "postinstall":  "prisma generate",
+                    "vercel-build":  "prisma generate \u0026\u0026 next build"
+                },
+    "dependencies":  {
+                         "@heroicons/react":  "^2.2.0",
+                         "@prisma/adapter-pg":  "^7.5.0",
+                         "@prisma/client":  "^7.5.0",
+                         "@prisma/extension-accelerate":  "^3.0.1",
+                         "@tailwindcss/forms":  "^0.5.10",
+                         "autoprefixer":  "10.4.20",
+                         "bcrypt":  "^5.1.1",
+                         "clsx":  "^2.1.1",
+                         "dotenv":  "^17.3.1",
+                         "lucide-react":  "^0.577.0",
+                         "next":  "latest",
+                         "next-auth":  "5.0.0-beta.25",
+                         "pg":  "^8.20.0",
+                         "postcss":  "8.5.1",
+                         "postgres":  "^3.4.6",
+                         "react":  "latest",
+                         "react-dom":  "latest",
+                         "react-hook-form":  "^7.71.2",
+                         "tailwindcss":  "3.4.17",
+                         "typescript":  "5.7.3",
+                         "use-debounce":  "^10.0.4",
+                         "zod":  "^3.25.17"
+                     },
+    "devDependencies":  {
+                            "@types/bcrypt":  "^5.0.2",
+                            "@types/node":  "22.10.7",
+                            "@types/pg":  "8.11.11",
+                            "@types/react":  "19.0.7",
+                            "@types/react-dom":  "19.0.3",
+                            "prisma":  "^7.5.0"
+                        },
+    "pnpm":  {
+                 "onlyBuiltDependencies":  [
+                                               "bcrypt",
+                                               "sharp"
+                                           ]
+             }
 }
