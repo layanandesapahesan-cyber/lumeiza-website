@@ -5,19 +5,19 @@ export const siteConfig = {
   subtitle: 'Design, Illustration, Icons - Bringing Ideas to Life',
   
   contact: {
-    phone: '+62 21 1234 5678',
-    whatsapp: '+62 811 2345 6789',
-    email: 'hello@lumeza.com',
-    address: 'Jl. Kreativitas No. 123, Jakarta Selatan, 12560, Indonesia',
+    phone: '+62 882 1672 6472',
+    whatsapp: '+62 882 1672 6472',
+    email: 'hello@lumeiza.com',
+    address: 'Jl. Semarang - Purwordadi No. 25, Godong, Grobogan, 12560, Indonesia',
     hours: 'Senin - Jumat: 9:00 - 17:00',
   },
 
   social: {
-    instagram: 'https://instagram.com/lumeza',
-    linkedin: 'https://linkedin.com/company/lumeza',
-    twitter: 'https://twitter.com/lumeza',
-    dribbble: 'https://dribbble.com/lumeza',
-    behance: 'https://behance.net/lumeza',
+    instagram: 'https://instagram.com/lumeiza',
+    linkedin: 'https://linkedin.com/company/lumeiza',
+    twitter: 'https://twitter.com/lumeiza',
+    dribbble: 'https://dribbble.com/lumeiza',
+    behance: 'https://behance.net/lumeiza',
   },
 
   about: {

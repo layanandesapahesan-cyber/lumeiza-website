@@ -15,7 +15,7 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
             <div className="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg"></div>
-            <span className="font-bold text-xl text-gray-900">Lumeza</span>
+            <span className="font-bold text-xl text-gray-900">Lumeiza</span>
           </Link>
 
           {/* Desktop Menu */}

@@ -12,9 +12,9 @@ export function Footer() {
         <div className="grid md:grid-cols-4 gap-8 mb-12">
           {/* About Section */}
           <div>
-            <h3 className="font-bold text-lg text-white mb-4">Tentang Lumeza</h3>
+            <h3 className="font-bold text-lg text-white mb-4">Tentang Lumeiza</h3>
             <p className="text-gray-400 text-sm mb-4">
-              Lumeza Creative Studio menghubungkan kreativitas dengan presisi dalam setiap desain, ilustrasi, dan ikon yang kami buat untuk menghidupkan ide-ide Anda.
+              Lumeiza Creative Studio menghubungkan kreativitas dengan presisi dalam setiap desain, ilustrasi, dan ikon yang kami buat untuk menghidupkan ide-ide Anda.
             </p>
             <p className="text-gray-500 text-xs italic">{siteConfig.subtitle}</p>
           </div>
@@ -111,7 +111,7 @@ export function Footer() {
       {/* Copyright */}
       <div className="border-t border-gray-800 bg-gray-950">
         <div className="container-main py-6 text-center text-sm text-gray-500">
-          <p>© {currentYear} Lumeza. All rights reserved.</p>
+          <p>© {currentYear} Lumeiza. All rights reserved.</p>
         </div>
       </div>
     </footer>
