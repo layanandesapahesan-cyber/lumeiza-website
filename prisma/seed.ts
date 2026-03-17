@@ -19,7 +19,7 @@ async function main() {
       category: 'Icon',
       price: 150000,
       imageUrl: 'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d9?w=400',
-      tags: ['Best Seller', 'New'],
+      tags: ["Best Seller", "New"],
       downloads: 1234,
       featured: true
     },
