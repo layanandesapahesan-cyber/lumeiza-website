@@ -19,3 +19,22 @@ model Contact {
 
   @@map("contacts")
 }
+
+// ⬇️ TAMBAHKAN MODEL PRODUCT DI SINI ⬇️
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  category    String   // "Icon", "Ilustrasi", "Template", "Lottie"
+  price       Int?     // dalam rupiah
+  imageUrl    String
+  fileUrl     String?
+  tags        String[] // ["Best Seller", "New", "Sale", "Popular"]
+  featured    Boolean  @default(false)
+  downloads   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("products")
+}
