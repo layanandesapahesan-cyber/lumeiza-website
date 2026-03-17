@@ -1,16 +1,26 @@
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 import GaleriFilter from '@/components/GaleriFilter'
-import { Search } from 'lucide-react'
+import GaleriSearch from '@/components/GaleriSearch'  // 🔥 KOMPONEN BARU
+import Pagination from '@/components/Pagination'      // 🔥 KOMPONEN BARU
 
 const ITEMS_PER_PAGE = 8
 
-async function getProducts(category?: string, page: number = 1) {
+async function getProducts(category?: string, search?: string, page: number = 1) {
   const skip = (page - 1) * ITEMS_PER_PAGE
 
-  const where = category && category !== 'all' 
-    ? { category }
-    : {}
+  const where: any = {}
+  
+  if (category && category !== 'all') {
+    where.category = category
+  }
+  
+  if (search) {
+    where.name = {
+      contains: search,
+      mode: 'insensitive', // Pencarian case insensitive
+    }
+  }
 
   const [products, total] = await Promise.all([
     prisma.product.findMany({
@@ -32,15 +42,16 @@ async function getProducts(category?: string, page: number = 1) {
 export default async function GaleriPage({
   searchParams,
 }: {
-  searchParams?: Promise<{ kategori?: string; page?: string }> | { kategori?: string; page?: string }
+  searchParams?: Promise<{ kategori?: string; q?: string; page?: string }> | { kategori?: string; q?: string; page?: string }
 }) {
-  // SOLUSI: Tangani Promise dan undefined dengan aman
+  // Tangani Promise dan undefined dengan aman
   const params = searchParams instanceof Promise ? await searchParams : searchParams || {}
   
   const kategori = params.kategori
+  const search = params.q           // 🔥 PARAMETER PENCARIAN
   const page = parseInt(params.page || '1')
   
-  const { products, total, totalPages } = await getProducts(kategori, page)
+  const { products, total, totalPages } = await getProducts(kategori, search, page)
   const start = (page - 1) * ITEMS_PER_PAGE + 1
   const end = Math.min(page * ITEMS_PER_PAGE, total)
 
@@ -59,16 +70,9 @@ export default async function GaleriPage({
       </div>
 
       <div className="container mx-auto px-4 py-8">
-        {/* Search Bar (akan dibuat nanti) */}
-        <div className="mb-8">
-          <div className="relative max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
-            <input
-              type="text"
-              placeholder="Cari produk..."
-              className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-            />
-          </div>
+        {/* 🔥 SEARCH BAR - menggunakan komponen GaleriSearch */}
+        <div className="mb-8 max-w-md">
+          <GaleriSearch />
         </div>
 
         {/* Filter Kategori */}
@@ -77,7 +81,10 @@ export default async function GaleriPage({
         {/* Products Grid */}
         {products.length === 0 ? (
           <div className="text-center py-16 bg-white rounded-xl">
-            <p className="text-gray-500">Belum ada produk di kategori ini</p>
+            <p className="text-gray-500">Tidak ada produk yang ditemukan</p>
+            <p className="text-sm text-gray-400 mt-2">
+              Coba kata kunci lain atau pilih kategori berbeda
+            </p>
           </div>
         ) : (
           <>
@@ -116,7 +123,7 @@ export default async function GaleriPage({
                   <div className="p-4">
                     <div className="flex items-start justify-between mb-2">
                       <h3 className="font-semibold text-gray-800 line-clamp-1">{product.name}</h3>
-                      <span className="text-xs px-2 py-1 bg-blue-50 text-blue-600 rounded-full">
+                      <span className="text-xs px-2 py-1 bg-blue-50 text-blue-600 rounded-full whitespace-nowrap">
                         {product.category}
                       </span>
                     </div>
@@ -130,12 +137,13 @@ export default async function GaleriPage({
               ))}
             </div>
 
-            {/* Pagination Info */}
-            {total > 0 && (
-              <div className="mt-8 text-sm text-gray-600 text-center">
-                Menampilkan {start}-{end} dari {total} produk
-              </div>
-            )}
+            {/* 🔥 PAGINATION - menggunakan komponen Pagination */}
+            <Pagination
+              currentPage={page}
+              totalPages={totalPages}
+              totalItems={total}
+              itemsPerPage={ITEMS_PER_PAGE}
+            />
           </>
         )}
       </div>
