@@ -36,4 +36,5 @@ export const navLinks = [
   { href: '/portfolio', label: 'Portfolio' },
   { href: '/blog', label: 'Blog' },
   { href: '/kontak', label: 'Kontak' },
+  { href: '/galeri', label: 'Galeri' }, // Bisa ditambahkan di sini juga
 ]
