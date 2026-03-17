@@ -20,7 +20,7 @@ export function Navbar() {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link: typeof navLinks[0]) => (
+            {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -29,13 +29,6 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
-            {/* Tambahan link Galeri di desktop */}
-            <Link
-              href="/galeri"
-              className="text-gray-600 hover:text-indigo-600 font-medium transition"
-            >
-              Galeri
-            </Link>          
           </div>
 
           {/* CTA Button */}
@@ -57,7 +50,7 @@ export function Navbar() {
         {/* Mobile Menu */}
         {isOpen && (
           <div className="md:hidden pb-4 space-y-2">
-            {navLinks.map((link: typeof navLinks[0]) => (
+            {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -67,14 +60,6 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
-            {/* Tambahan link Galeri di mobile */}
-            <Link
-              href="/galeri"
-              className="block px-4 py-2 text-gray-600 hover:bg-gray-100 rounded"
-              onClick={() => setIsOpen(false)}
-            >
-              Galeri
-            </Link>
             <Link
               href="/kontak"
               className="block px-4 py-2 bg-indigo-600 text-white rounded font-medium text-center"
