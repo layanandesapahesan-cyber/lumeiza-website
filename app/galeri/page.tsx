@@ -32,10 +32,13 @@ async function getProducts(category?: string, page: number = 1) {
 export default async function GaleriPage({
   searchParams,
 }: {
-  searchParams: { kategori?: string; page?: string }
+  searchParams?: Promise<{ kategori?: string; page?: string }> | { kategori?: string; page?: string }
 }) {
-  const kategori = searchParams.kategori
-  const page = parseInt(searchParams.page || '1')
+  // SOLUSI: Tangani Promise dan undefined dengan aman
+  const params = searchParams instanceof Promise ? await searchParams : searchParams || {}
+  
+  const kategori = params.kategori
+  const page = parseInt(params.page || '1')
   
   const { products, total, totalPages } = await getProducts(kategori, page)
   const start = (page - 1) * ITEMS_PER_PAGE + 1
