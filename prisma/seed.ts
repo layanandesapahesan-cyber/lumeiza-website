@@ -1,7 +1,4 @@
-import { PrismaClient } from '@prisma/client'
-
-// Inisialisasi PrismaClient dengan cara yang benar (TANPA datasources)
-const prisma = new PrismaClient()
+import { prisma } from '../lib/prisma'
 
 async function main() {
   console.log('🌱 Seeding products...')
