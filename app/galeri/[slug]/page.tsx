@@ -3,8 +3,9 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeft, Download, Calendar, Tag, Eye } from 'lucide-react'
 
-async function getProduct(paramsSlug: Promise<string>) {
-  const slug = await paramsSlug
+// 🔧 FIX: Parameter harus string (bukan Promise<string>)
+// Karena fungsi ini menerima slug string setelah di-await
+async function getProduct(slug: string) {
   const product = await prisma.product.findUnique({
     where: { slug }
   })
@@ -19,7 +20,6 @@ export default async function ProductDetailPage({
 }) {
   const { slug } = await params
   const product = await getProduct(slug)
-
 
   return (
     <div className="min-h-screen bg-white">
@@ -79,6 +79,33 @@ export default async function ProductDetailPage({
                 </div>
               )}
 
+              {/* Tags Section - Tambahan jika ada tags */}
+              {product.tags && product.tags.length > 0 && (
+                <div className="mb-6">
+                  <h3 className="font-semibold mb-2">Tags</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {product.tags.map((tag) => {
+                      const tagColors: Record<string, string> = {
+                        'Best Seller': 'bg-yellow-100 text-yellow-800',
+                        'New': 'bg-green-100 text-green-800',
+                        'Sale': 'bg-red-100 text-red-800',
+                        'Popular': 'bg-purple-100 text-purple-800'
+                      }
+                      return (
+                        <span
+                          key={tag}
+                          className={`px-3 py-1 rounded-full text-sm font-medium ${
+                            tagColors[tag] || 'bg-gray-100 text-gray-800'
+                          }`}
+                        >
+                          {tag}
+                        </span>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
+
               <div className="border-t pt-6 space-y-4">
                 <h3 className="font-semibold">Detail Produk</h3>
                 <div className="grid grid-cols-2 gap-4">
@@ -98,7 +125,11 @@ export default async function ProductDetailPage({
                     <div>
                       <p className="text-sm text-gray-500">Dirilis</p>
                       <p className="font-medium">
-                        {new Date(product.createdAt).toLocaleDateString('id-ID')}
+                        {new Date(product.createdAt).toLocaleDateString('id-ID', {
+                          day: 'numeric',
+                          month: 'long',
+                          year: 'numeric'
+                        })}
                       </p>
                     </div>
                   </div>
