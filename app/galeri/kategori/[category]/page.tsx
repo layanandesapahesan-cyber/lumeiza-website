@@ -6,6 +6,7 @@ import CategoryHeader from '@/components/CategoryHeader'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import Pagination from '@/components/Pagination'
 import Image from 'next/image'
+import { notFound } from 'next/navigation'
 
 const ITEMS_PER_PAGE = 12
 
@@ -49,6 +50,10 @@ export default async function CategoryPage({
   searchParams 
 }: CategoryPageProps) {
   const categorySlug = params.category
+  if (!categorySlug) {
+    return notFound()
+  }
+  
   const categoryName = categorySlug.charAt(0).toUpperCase() + categorySlug.slice(1)
   const search = searchParams.q || ''
   const page = parseInt(searchParams.page || '1')
