@@ -49,14 +49,16 @@ export default async function CategoryPage({
   params, 
   searchParams 
 }: CategoryPageProps) {
-  const categorySlug = params.category
+  const resolvedParams = await params
+  const resolvedSearchParams = await searchParams
+  const categorySlug = resolvedParams.category
   if (!categorySlug) {
     return notFound()
   }
   
   const categoryName = categorySlug.charAt(0).toUpperCase() + categorySlug.slice(1)
-  const search = searchParams.q || ''
-  const page = parseInt(searchParams.page || '1')
+  const search = resolvedSearchParams.q || ''
+  const page = parseInt(resolvedSearchParams.page || '1')
 
   const categoryInfo = await getCategoryInfo(categoryName)
   if (!categoryInfo) {
