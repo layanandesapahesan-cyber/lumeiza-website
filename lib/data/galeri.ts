@@ -8,6 +8,33 @@ export interface Category {
   productCount: number
 }
 
+export interface ProductWithPrice {
+  id: string
+  name: string
+  slug: string
+  description: string | null
+  category: string
+  price: number | null
+  priceDisplay: string | null
+  imageUrl: string
+  fileUrl: string | null
+  featured: boolean
+  downloads: number
+  tags: string[]
+  createdAt: Date
+  updatedAt: Date
+}
+
+export function formatProductPrice(product: { price: number | null; priceDisplay: string | null }): string {
+  if (product.priceDisplay) {
+    return product.priceDisplay
+  }
+  if (product.price) {
+    return `Rp ${product.price.toLocaleString('id-ID')}`
+  }
+  return 'Hubungi Kami'
+}
+
 export async function getCategories(): Promise<Category[]> {
   const categories = await prisma.product.groupBy({
     by: ['category'],
@@ -19,7 +46,6 @@ export async function getCategories(): Promise<Category[]> {
     }
   })
 
-  // Map to rich category data
   const categoryMap: Record<string, Category> = {
     'Icon': {
       name: 'Icon',
@@ -75,30 +101,79 @@ export async function getCategories(): Promise<Category[]> {
 }
 
 export async function getProductsByCategory(
-  category: string, 
-  search?: string, 
+  category: string,
+  filters: {
+    search?: string
+    tags?: string[]
+    priceMin?: number
+    priceMax?: number
+    sort: 'featured' | 'downloads' | 'price-low' | 'price-high' | 'newest'
+  } = { sort: 'featured' },
   page: number = 1, 
   itemsPerPage: number = 12
 ) {
   const skip = (page - 1) * itemsPerPage
 
-  const where: any = { category }
+  const where: any = { 
+    category,
+    AND: []
+  }
 
-  if (search) {
-    where.name = {
-      contains: search,
-      mode: 'insensitive'
-    }
+  if (filters.search) {
+    where.AND.push({
+      name: {
+        contains: filters.search,
+        mode: 'insensitive'
+      }
+    })
+  }
+
+  if (filters.tags && filters.tags.length > 0) {
+    where.AND.push({
+      tags: {
+        hasSome: filters.tags
+      }
+    })
+  }
+
+  // Skip price filter if no values specified - Prisma nullable price
+  if (filters.priceMin !== undefined && filters.priceMin > 0) {
+    where.AND.push({
+      price: {
+        gte: filters.priceMin
+      }
+    })
+  }
+  if (filters.priceMax !== undefined && filters.priceMax < Number.MAX_SAFE_INTEGER) {
+    where.AND.push({
+      price: {
+        lte: filters.priceMax
+      }
+    })
+  }
+
+  let orderBy: any[] = []
+  switch (filters.sort) {
+    case 'downloads':
+      orderBy = [{ downloads: 'desc' }]
+      break
+    case 'price-low':
+      orderBy = [{ price: 'asc' }]
+      break
+    case 'price-high':
+      orderBy = [{ price: 'desc' }]
+      break
+    case 'newest':
+      orderBy = [{ createdAt: 'desc' }]
+      break
+    default:
+      orderBy = [{ featured: 'desc' }, { downloads: 'desc' }]
   }
 
   const [products, total] = await Promise.all([
     prisma.product.findMany({
       where,
-      orderBy: [
-        { featured: 'desc' },
-        { downloads: 'desc' },
-        { createdAt: 'desc' }
-      ],
+      orderBy,
       skip,
       take: itemsPerPage,
     }),
@@ -111,6 +186,12 @@ export async function getProductsByCategory(
     totalPages: Math.ceil(total / itemsPerPage),
     currentPage: page
   }
+}
+
+export async function getProductBySlug(slug: string) {
+  return prisma.product.findUnique({
+    where: { slug }
+  })
 }
 
 export async function getRelatedProducts(category: string, excludeSlug: string, limit: number = 4) {

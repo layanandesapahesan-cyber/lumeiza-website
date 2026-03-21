@@ -1,9 +1,10 @@
 import { prisma } from '@/lib/prisma'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import Image from 'next/image' // Gunakan Image component dari Next.js
+import Image from 'next/image'
 import { ArrowLeft, Download, Calendar, Tag, Eye } from 'lucide-react'
 import { Metadata } from 'next'
+import { formatProductPrice } from '@/lib/data/galeri'
 
 // Generate metadata dinamis untuk SEO
 export async function generateMetadata({ 
@@ -33,12 +34,6 @@ async function getProduct(slug: string) {
     
     if (!product) notFound()
     
-    // Increment download count when viewed (optional)
-    // await prisma.product.update({
-    //   where: { id: product.id },
-    //   data: { views: { increment: 1 } }
-    // })
-    
     return product
   } catch (error) {
     console.error('Error fetching product:', error)
@@ -53,6 +48,14 @@ export default async function ProductDetailPage({
 }) {
   const { slug } = await params
   const product = await getProduct(slug)
+  
+  // FIX: Gunakan type assertion untuk mengatasi error TypeScript
+  const productWithPrice = {
+    ...product,
+    priceDisplay: (product as any).priceDisplay || null
+  }
+  
+  const displayPrice = formatProductPrice(productWithPrice)
 
   return (
     <div className="min-h-screen bg-white">
@@ -109,13 +112,12 @@ export default async function ProductDetailPage({
                 </p>
               )}
 
-              {product.price && product.price > 0 && (
-                <div className="mb-6">
-                  <p className="text-3xl font-bold text-blue-600">
-                    Rp {product.price.toLocaleString('id-ID')}
-                  </p>
-                </div>
-              )}
+              {/* HARGA - Menggunakan displayPrice yang sudah diformat */}
+              <div className="mb-6">
+                <p className="text-3xl font-bold text-blue-600">
+                  {displayPrice}
+                </p>
+              </div>
 
               {/* Tags Section */}
               {product.tags && product.tags.length > 0 && (

@@ -28,6 +28,7 @@ model Product {
   description String?
   category    String   // "Icon", "Ilustrasi", "Template", "Lottie"
   price       Int?     // dalam rupiah
+  priceDisplay String?   // untuk tampilan: "Rp 50.000", "Call for Price"
   imageUrl    String
   fileUrl     String?
   tags        String[] // ["Best Seller", "New", "Sale", "Popular"]
