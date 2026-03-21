@@ -57,6 +57,16 @@ async function getCategoryInfo(category: string) {
       name: 'Lottie Animations',
       description: 'Interactive Lottie animations for modern UI/UX experiences and micro-interactions.',
       icon: '✨'
+    },
+    'Logo': {
+      name: 'Logo Designs',
+      description: 'Premium logo designs for modern brands and businesses.',
+      icon: '🎨'
+    },
+    'Undangan Digital': {
+      name: 'Digital Invitations',
+      description: 'Elegant digital invitations for weddings, birthdays, and special events.',
+      icon: '💌'
     }
   }
 

@@ -8,7 +8,17 @@
 - [ ] Step 5: Check for any remaining console/runtime errors
 - [ ] Step 6: Complete
 
-**All errors fixed.** Run `pnpm dev`, test `/galeri` and `/galeri/kategori/icon`.
+# Galeri Upgrade TODO
 
-✅ Next/Image hostname error: Fixed via next.config.ts
-✅ CategoryPage runtime error: Fixed with params.category null check + notFound()
+## New Features
+- [ ] Add Logo & Undangan Digital categories
+- [ ] Update lib/data/galeri.ts + getCategoryInfo
+- [ ] Add sample products to Prisma
+- [ ] Test all routes
+- [ ] Modern/professional UI (already good)
+
+**Progress:**
+- [x] lib/data/galeri.ts: Added Logo, Undangan Digital
+- [x] app/galeri/kategori/[category]/page.tsx: getCategoryInfo updated
+
+**Next:** Add sample Prisma data to prisma/seed.sql

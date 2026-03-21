@@ -48,6 +48,20 @@ export async function getCategories(): Promise<Category[]> {
       description: 'Animasi Lottie interaktif untuk UI/UX modern',
       imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400',
       productCount: 0
+    },
+    'Logo': {
+      name: 'Logo',
+      slug: 'logo',
+      description: 'Desain logo premium untuk brand dan bisnis modern',
+      imageUrl: 'https://images.unsplash.com/photo-1689840895547-71434f492618?w=400',
+      productCount: 0
+    },
+    'Undangan Digital': {
+      name: 'Undangan Digital',
+      slug: 'undangan-digital',
+      description: 'Undangan digital elegan untuk pernikahan, ulang tahun, dan acara spesial',
+      imageUrl: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=400',
+      productCount: 0
     }
   }
 
